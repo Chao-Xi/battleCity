@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>tk4</title>
+</head>
+ <body onkeydown="getCommand();">
+ <audio controls loop="loop"><source src="hf.mp3 "/></audio>
+ <br/>
+ <span style="font-size:15px;color:red;margin-left:100px;">Welcome to the BattleCity</span> 
+ <br/>
+ <canvas id="tankmap" width="400px" height="300px" style="background-color:black">
+ </canvas>
+ <br/>
+ <p>Bullet Statistic: <span id="bulletdata"></span></p>
+ <script type="text/javascript" src="tank4.js"></script>
+  <script type="text/javascript">
+   
+	//direction 0 upward 1:rightward 2:downward 3:leftward
+   var canvas1=document.getElementById('tankmap');
+   var cxt=canvas1.getContext('2d');
+   var enemyTanks=new Array();
+   var mytank=new myTank(150,240,0,myColor);
+   for(var i=0;i<5;i++)
+   {   
+	  var enemyTank=new EnemyTank((i+1)*50,0,2,enemyColor);
+	  enemyTanks[i]=enemyTank;
+	  
+   }
+   
+   var myBullets=new Array();
+   //新建一组炮弹
+   
+   
+   flashTankMap();
+   //刷新作战区域
+   function flashTankMap(){
+	 cxt.clearRect(0,0,400,300);
+	 
+	 drawTanks(mytank);
+	 
+	  for(var i=0;i<5;i++)
+     {  
+	    drawTanks(enemyTanks[i]);
+	  }
+	  drawMyBullet();
+	}
+   
+  
+   
+   function getCommand()
+   {
+	 var code=event.keyCode; 
+	 switch(code)
+	 {
+	   case 87:
+	   mytank.moveUp();
+	   break;
+	   
+	   case 68:
+	   mytank.moveRight();
+	   break;
+	   
+	   case 83:
+	   mytank.moveDown();
+	   break;
+	   
+	   case 65:
+	   mytank.moveLeft();
+	   break;
+	   
+	   case 74:
+	   mytank.openfire();
+	   break;
+	   
+	}
+	//clean the whole canvas
+	 flashTankMap();
+   }
+   
+   window.setInterval("flashTankMap()",100);
+  </script>
+
+
+</body>
+</html>
