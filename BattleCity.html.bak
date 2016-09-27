@@ -1,0 +1,89 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta name="Author" content="">
+  <meta name="Keywords" content="Neil Xi">
+  <meta name="Description" content="">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+   <title></title>
+ </head>
+ <body onkeydown="getCommand();">
+ <h2 style="color:red">Lets play the BattleCity</h2>
+ <audio autoplay="autoplay" loop="loop"><source src="music/Timber.mp3 "/></audio>
+ <canvas id='Map' width='800px' height='500px' style="background-color:black"></canvas>
+ <span id="show">Running Data:</span>
+<script type="text/javascript" src="tank4.js"></script>
+ <script type="text/javascript">
+ 
+  
+ 
+  var canvas1=document.getElementById('Map');
+  var cxt=canvas1.getContext("2d");
+  
+  var mytank=new Mytank(350,300,0,Mycolor);
+  var myBullets=new Array();
+  //var myBullet=null;
+  
+  
+  var enemyTanks=new Array();
+  
+  for(var i=0;i<4;i++)
+  {
+	  var enemyTank=new Enemytank((i+1)*100,0,2,Enemycolor);
+	  //put into the array;
+	  enemyTanks[i]=enemyTank;
+	  
+	  
+  }
+ 
+  function flashTankMap()
+  {
+	  cxt.clearRect(0,0,800,500);
+	  drawTank(mytank);  
+	   drawMyBullet();
+	  for(var i=0;i<4;i++)
+  {
+	  drawTank(enemyTanks[i]);
+  }
+     
+  
+  
+  }
+   flashTankMap();
+  function getCommand()
+  {
+	  //alert("hello!");
+	  var code=event.keyCode;
+	  //alert(code);
+	  switch(code){
+		  case 87:
+		  mytank.moveUp();
+		  break;
+		  
+		  case 68:
+		  mytank.moveRight();
+		  break;
+		  
+		  case 83:
+		  mytank.moveDown();
+		  break;
+		  
+		  case 65:
+		  mytank.moveLeft();
+		  break;
+		  
+		  case 74:
+		  mytank.shotenemy();
+		  break;
+	  }
+		  //clear the canvas
+		 flashTankMap();
+		 //定时刷新画布
+	  }
+	  
+	  window.setInterval("flashTankMap()",100);
+ </script>
+ </body>
+</html>
